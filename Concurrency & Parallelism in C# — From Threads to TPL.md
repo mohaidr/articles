@@ -70,7 +70,11 @@ class Program
         // لا يوجد thread جديد! نفس thread الـ Main يُحرَّر ويعمل على أشياء أخرى
         // بينما الـ OS ينتظر رد الشبكة — لما يجي الرد يكمل من حيث وقف
         Console.WriteLine($"[Main] قبل await — Thread: {Thread.CurrentThread.ManagedThreadId}");
-        await LoadDataAsync();
+        var loadDataTask = LoadDataAsync();
+        
+        Console.WriteLine($"[Main] Do Work While Data Loading");
+
+        await loadDataTask;
         Console.WriteLine($"[Main] بعد await — Thread: {Thread.CurrentThread.ManagedThreadId}");
     }
 
